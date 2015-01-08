@@ -4,7 +4,7 @@ import (
 	"flag"
 	"github.com/diebels727/fsnotify"
 	"log"
-  "os/exec"
+	"os/exec"
 )
 
 var watch string
@@ -14,7 +14,7 @@ var commandMessage string
 func init() {
 	flag.StringVar(&watch, "watch", "/tmp", "path or file to watch for changes")
 	flag.StringVar(&command, "command", "", "OS command to execute; should be full path")
-  flag.StringVar(&commandMessage,"message","Executing.","Message to display when this command executes.")
+	flag.StringVar(&commandMessage, "message", "Executing.", "Message to display when this command executes.")
 }
 
 func main() {
@@ -34,12 +34,12 @@ func main() {
 			case event := <-watcher.Events:
 				log.Println("event:", event)
 				if event.Op&fsnotify.Close == fsnotify.Close {
-          log.Println(commandMessage)
-          cmd := exec.Command(command)
-          err := cmd.Run()
-          if err != nil {
-            log.Println(err)
-          }
+					log.Println(commandMessage)
+					cmd := exec.Command(command)
+					err := cmd.Run()
+					if err != nil {
+						log.Println(err)
+					}
 				}
 			case err := <-watcher.Errors:
 				log.Println("error:", err)
